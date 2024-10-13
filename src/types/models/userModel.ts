@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IUser extends Document {
   username: string;
-  password:string
+  hashedPassword:string
   email: string;
   role:string;
   classname:string
@@ -18,7 +18,7 @@ const UserSchema = new Schema<IUser>({
     required:[true,'user name is required'],
     unique:true
   },
-  password:{
+  hashedPassword:{
     type:String,
     required:true
   },
@@ -36,7 +36,7 @@ const UserSchema = new Schema<IUser>({
     required:[true, 'pliase provide an class name']},
  classId:{
     type:Schema.Types.ObjectId,
-    ref:'class',
+    ref:'classes',
     required:[true,'please specifi at least one unit']
 }
   
