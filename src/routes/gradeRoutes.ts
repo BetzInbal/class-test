@@ -1,35 +1,36 @@
 import { Router } from "express";
 import { addGrade, createTest, editGrade, getAllgrades, getAllStudentGrades, getAveGrades, getGrade } from "../controllers/gradeController";
+import { VertifyUser } from "../middlewares/VertifyUser";
 
 const graeRouter = Router();
 
 
 //create test
 // teacher only
-graeRouter.post("/", createTest);
+graeRouter.post("/", VertifyUser, createTest);
 
 //add garde
 // teacher only
-graeRouter.put("/:id", addGrade);
+graeRouter.put("/:id", VertifyUser, addGrade);
 
 //get specific grade
 // teacher all, student specific
-graeRouter.get("/:tesId", getGrade);
+graeRouter.get("/:tesId", VertifyUser, getGrade);
 
 //update grad
 // teacher only
-graeRouter.patch("/:id", editGrade);
+graeRouter.patch("/:id", VertifyUser, editGrade);
 
 //get all tests grades specific student
 // teacher all, student specific
-graeRouter.get("/", getAllStudentGrades);
+graeRouter.get("/", VertifyUser, getAllStudentGrades);
 
 //get all grades on one test
 // teacher only
-graeRouter.post("/:id/test", getAllgrades);
+graeRouter.post("/:id/test", VertifyUser, getAllgrades);
 
 //get average on one test
 // teacher only
-graeRouter.post("/:id/ave", getAveGrades);
+graeRouter.post("/:id/ave", VertifyUser, getAveGrades);
 
 export default graeRouter;

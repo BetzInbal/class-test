@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserService from "../servisec/userService";
 import ResponseData from "../types/DTO/ResponseData";
-import SignupDto from "../types/DTO/SignupDto";
+import { ReqWithUser } from "../middlewares/VertifyUser";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -16,8 +16,8 @@ export const createUser = async (req: Request, res: Response) => {
     }
  };
 
-export const getUsers = async (req: Request, res: Response) => { };
+export const getUsers = async (req: Request | ReqWithUser, res: Response) => { };
 
-export const getUser = async (req: Request, res: Response) => { };
+export const getUser = async (req: Request | ReqWithUser, res: Response) => { };
 
 // Optionally, add DELETE and EDIT functions
