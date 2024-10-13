@@ -13,9 +13,7 @@ import classModel, { Iclass } from "../types/models/classModel";
 export default class UserService {
 
     public static async signup(signUser: SignupDto): Promise<ResponseData<{ id: string } | unknown>> {
-        try {
-            console.log( {signUser});
-            
+        try {          
             const newUser:IUser = await new userModel(signUser)
             newUser.hashedPassword = await bcrypt.hash(signUser.password, 10)
             if (newUser.role === 'student')
@@ -29,7 +27,6 @@ export default class UserService {
                 const newClass = await new classModel({classname:newUser.classname})
                 newUser.classId = newClass.id
                 await newClass.save()
-                console.log(newUser);
             }
             await newUser.save()
             
@@ -39,9 +36,7 @@ export default class UserService {
                 data: { id: newUser.id },
                 status: 201
             }
-        } catch (error) {
-            console.log(error);
-            
+        } catch (error) {      
             return {
                 err: true,
                 status: 404,

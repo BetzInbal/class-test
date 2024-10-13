@@ -5,7 +5,6 @@ import SignupDto from "../types/DTO/SignupDto";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        console.log(req.body);
         
         const result:ResponseData<{ id: string } | unknown> = await UserService.signup(req.body)
         
