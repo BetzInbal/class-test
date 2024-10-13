@@ -1,10 +1,21 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export class Igrade {
-  constructor(  
+export interface Igrade extends Document{
     suidentId: Schema.Types.ObjectId,
-    grade:number){}
+    grade:number
 }
+
+const gradeSchema = new Schema<Igrade>({
+  suidentId:{
+    type:Schema.Types.ObjectId,
+    ref:'users',
+    required:[true,'student id mast by provaided']
+  },
+  grade:{
+    type:Number,
+    required:[true,'grade id mast by provaided']
+  },
+})
 
 export interface Itest extends Document {
   subject: string;
@@ -23,27 +34,26 @@ const testSchema = new Schema<Itest>({
     default: Date.now()
   },
   grades:{
-    type:[Igrade],
+    type:[gradeSchema],
     default:[],
-    ref:'users'
   }
 })
-
+ 
 export interface Iclass extends Document {
   classname: string;
   tests: Itest[];
 }
 
-const CclassSchema = new Schema<Iclass>({
+const classSchema = new Schema<Iclass>({
   classname:{
     type:String,
     required:[true,'class name mast by provaided'],
     unique:true
   },
   tests:{
-    type:[mongoose.model<Itest>("test", testSchema)]
+    type:[testSchema]
   }
 });
 
 
-export default mongoose.model<Iclass>("class", CclassSchema);
+export default mongoose.model<Iclass>("class", classSchema);
