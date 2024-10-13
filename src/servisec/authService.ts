@@ -4,16 +4,18 @@ import SignupDto from "../types/DTO/SignupDto";
 import TokenPayloadDto from "../types/DTO/TokenPayloadDto";
 import userModel, { IUser } from "../types/models/userModel";
 import bcrypt from 'bcrypt'
+import signInDto from "../types/DTO/signInDto";
 
 
 
 export default class AuthService{
 
-    public static async signIn(signUser:SignupDto) : Promise<ResponseData<string | unknown>>
+    public static async signIn(signUser:signInDto) : Promise<ResponseData<string | unknown>>
     {
         try {
+            
             //Test sent name and password
-            if(!signUser.userName || !signUser.password)
+            if(!signUser.username || !signUser.password)
             {
                 return{
                     err:true,
@@ -22,7 +24,7 @@ export default class AuthService{
                 }
             }
             //Checking that the user is in the DB
-            const user:IUser | null =  await userModel.findOne({username:signUser.userName} )
+            const user:IUser | null =  await userModel.findOne({username:signUser.username} )
             if(!user)
                 {
                     return{
@@ -32,7 +34,7 @@ export default class AuthService{
                     }
                 }
                 //Checking that the entered password is the same as the password stored in the system
-                if (!await bcrypt.compare(user.hashedPassword, signUser.password))
+                if (!await bcrypt.compare(signUser.password, user.hashedPassword))
                     {
                         return{
                             err:true,

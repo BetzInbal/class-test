@@ -11,7 +11,9 @@ export const VertifyUser = async (req:Request | ReqWithUser, res:Response, next:
         
         const payload:TokenPayloadDto = jwt.verify(token, process.env.SECRET_KEY as string) as TokenPayloadDto
         (req as ReqWithUser).user = payload
+        
         next()
+        
     } catch (error) {
         if (error instanceof TokenExpiredError)
         {            res.status(401).json({
