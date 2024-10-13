@@ -4,9 +4,10 @@ import gradeRouter from "./routes/gradeRoutes";
 import userRouter from "./routes/userRoutes";
 import authRouter from "./routes/authRouter"
 import cookieParser from "cookie-parser";
+import connectDB from "./config/db";
 
 dotenv.config();
-
+connectDB()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,8 +18,8 @@ app.use(cookieParser())
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/posts", gradeRouter);
-app.use("/users", userRouter);
+app.use("/grade", gradeRouter);
+app.use("/user", userRouter);
 
 
 
